@@ -1,5 +1,5 @@
-const { Item, Customer, Sequelize } = require("../models/index");
-const { Op } = require("sequelize");
+const generateTransactionCode = require("../middleware/createSales");
+const { Item, Customer, Sequelize, Sale } = require("../models/index");
 
 class Controller {
   static getAll(req, res) {
@@ -71,7 +71,7 @@ class Controller {
     let id = +req.params.id;
     Item.findByPk(id)
       .then((result) => {
-        res.status(200).json(data);
+        res.status(200).json(result);
       })
       .catch((err) => {
         res.status(400).json({ message: "Data not found!" });
