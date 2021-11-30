@@ -1,8 +1,20 @@
-const { Item } = require("../models/index");
+const { Item, Customer } = require("../models/index");
 
 class Controller {
   static getAll(req, res) {
-    res.send("Hello World");
+    Item.findAll({
+      include: [
+        {
+          model: Customer,
+        },
+      ],
+    })
+      .then((result) => {
+        res.status(200).json(result);
+      })
+      .catch((err) => {
+        res.status(400).json({ message: "Data not found!" });
+      });
   }
 
   static createMenu(req, res) {
@@ -20,7 +32,28 @@ class Controller {
           .json({ message: `Menu ${result.nama_item} berhasil dimasukan` });
       })
       .catch((err) => {
-        console.log(err);
+        res.status(500).json({ message: "Error" });
+      });
+  }
+
+  static createCust(req, res) {
+    let newCust = {
+      nama: req.body.nama,
+      contact: +req.body.contact,
+      email: req.body.email,
+      alamat: req.body.alamat,
+      diskon: +req.body.diskon,
+      tipe_diskon: req.body.tipe_diskon,
+      ktp: req.body.ktp,
+    };
+    Customer.create(newCust)
+      .then((result) => {
+        res
+          .status(201)
+          .json({ message: `Customer ${result.nama} berhasil dimasukan` });
+      })
+      .catch((err) => {
+        res.status(500).json({ message: "Error" });
       });
   }
 }
