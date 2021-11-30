@@ -1,14 +1,24 @@
-const { Item, Customer } = require("../models/index");
+const { Item, Customer, Sequelize } = require("../models/index");
+const { Op } = require("sequelize");
 
 class Controller {
   static getAll(req, res) {
-    Item.findAll({
-      include: [
-        {
-          model: Customer,
+    const Op = Sequelize.Op;
+    const { nama_item } = req.query;
+    let paramQuerySQL = {};
+
+    if (nama_item != "" && typeof nama_item !== "undefined") {
+      let querynama_item = {
+        nama_item: {
+          [Op.iLike]: `%${nama_item}%`,
         },
-      ],
-    })
+      };
+      paramQuerySQL.where = {
+        ...querynama_item,
+      };
+    }
+
+    Item.findAll(paramQuerySQL)
       .then((result) => {
         res.status(200).json(result);
       })
@@ -54,6 +64,17 @@ class Controller {
       })
       .catch((err) => {
         res.status(500).json({ message: "Error" });
+      });
+  }
+
+  static getById(req, res) {
+    let id = +req.params.id;
+    Item.findByPk(id)
+      .then((result) => {
+        res.status(200).json(data);
+      })
+      .catch((err) => {
+        res.status(400).json({ message: "Data not found!" });
       });
   }
 }
