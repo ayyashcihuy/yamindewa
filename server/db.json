@@ -1,23 +1,8 @@
 {
   "keranjangs": [
     {
-      "qty": "1",
-      "promoCode": "Tet",
-      "products": {
-        "id": 2,
-        "nama_item": "Mie Yamin Spesial",
-        "unit": "pcs",
-        "stok": 99,
-        "harga_satuan": 10000,
-        "barang": "https://selerasa.com/wp-content/uploads/2015/05/images_mie_Mie_ayam_21-mie-ayam-bakso-jamur.jpg",
-        "createdAt": "2021-11-30T18:44:19.254Z",
-        "updatedAt": "2021-11-30T18:44:19.254Z"
-      },
-      "id": 1
-    },
-    {
-      "qty": "1",
-      "promoCode": "Tet",
+      "qty": "2",
+      "promoCode": "Yey",
       "products": {
         "id": 3,
         "nama_item": "Mie Yamin Bakso",
