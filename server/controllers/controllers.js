@@ -1,4 +1,3 @@
-const generateTransactionCode = require("../middleware/createSales");
 const { Item, Customer, Sequelize, Sale } = require("../models/index");
 
 class Controller {
@@ -75,6 +74,40 @@ class Controller {
       })
       .catch((err) => {
         res.status(400).json({ message: "Data not found!" });
+      });
+  }
+
+  static createSales(req, res) {
+    const qty = +req.body.qty;
+    const id = req.body.products.id;
+    const updatedStock = {
+      stok: req.body.products.stok - qty,
+    };
+    Item.update(updatedStock, {
+      where: {
+        id,
+      },
+    })
+      .then(() => {})
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  static cancelSales(req, res) {
+    const qty = +req.body.qty;
+    const id = req.body.products.id;
+    const updatedStock = {
+      stok: req.body.products.stok + qty,
+    };
+    Item.update(updatedStock, {
+      where: {
+        id,
+      },
+    })
+      .then(() => {})
+      .catch((err) => {
+        console.log(err);
       });
   }
 }
